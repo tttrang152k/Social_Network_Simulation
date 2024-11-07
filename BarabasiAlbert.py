@@ -17,6 +17,8 @@ for chunk in edges_df:
 # Get nodes and edges number 
 num_nodes = len(BA_graph.nodes)  
 num_edges = BA_graph.number_of_edges() 
+print(f"Number of Nodes: {num_nodes}")
+print(f"Number of Edges: {num_edges}")
 
 # Initialize parameters for Barabási-Albert model
 m = 3  # number of edges to attach
@@ -47,9 +49,6 @@ BA_graph.add_edges_from(BA_edges)
 
 # Calculate 
 avg_path_length = nx.average_shortest_path_length(BA_graph) if nx.is_connected(BA_graph) else float('inf')
-clustering_coeff = nx.average_clustering(BA_graph)
-
-print(f"Number of Nodes: {num_nodes}")
-print(f"Number of Edges: {num_edges}")
 print(f"Average Path Length: {avg_path_length}")
+clustering_coeff = nx.average_clustering(BA_graph)
 print(f"Clustering Coefficient: {clustering_coeff}")
