@@ -6,7 +6,7 @@ from multiprocessing import Pool, Manager
 
 # Parameters
 n0 = 3  # Initial nodes
-t = 100  # New nodes to add
+t = 168114  # New nodes to add
 BA_graph = nx.complete_graph(n0)
 
 # Read and add edges in chunks
