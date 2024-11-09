@@ -3,8 +3,14 @@
 ## Watts-Strogatz Model
 ### Amazon
 Run Watts_Strogatz_Amazon.py with com-amazon.ungraph.txt dataset for Watts model for Amazon dataset
-
-
+  - Watts_Strogatz_Amazon.py
+  - com-amazon.ungraph.tx
+### Twitch
+With the extracted 10% connected largest component from the original dataset provided in sample.txt, run Watts_Twitch_Model to see the results. 
+To regenerate sample.txt, run Watts_Twitch_Sample
+  - Watts_Twitch_Sample
+  - Watts_Twitch_Model
+  - sample.txt
 ## Barabasi-Albert Model
 ### Amazon
 
