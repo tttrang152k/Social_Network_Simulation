@@ -37,11 +37,11 @@ lcc_original = max(nx.connected_components(G), key=len)
 G_lcc_original = G.subgraph(lcc_original).copy()
 print("Largest Connected Component of Original Graph - Nodes:", G_lcc_original.number_of_nodes(), "Edges:", G_lcc_original.number_of_edges())
 
-# Sample 10% of nodes from the LCC (updated percentage)
-sampleFraction = 0.10 
+# Sample 5% of nodes from the LCC (updated percentage)
+sampleFraction = 0.05
 selectedNodes = set(random.sample(list(G_lcc_original.nodes()), int(len(G_lcc_original) * sampleFraction)))
 subgraph = G_lcc_original.subgraph(selectedNodes)
-print("Subgraph (10% of LCC) - Nodes:", subgraph.number_of_nodes(), "Edges:", subgraph.number_of_edges())
+print("Subgraph (5% of LCC) - Nodes:", subgraph.number_of_nodes(), "Edges:", subgraph.number_of_edges())
 
 # Extract largest connected component of the sampled subgraph
 lcc = max(nx.connected_components(subgraph), key=len)
@@ -53,7 +53,7 @@ avgDegree = sum(dict(G_lcc.degree()).values()) / G_lcc.number_of_nodes()
 avgDegree_rounded = round(sum(dict(G_lcc.degree()).values()) / G_lcc.number_of_nodes())  # Rounded to the nearest whole number
 clustering_coeff_before = nx.average_clustering(G_lcc)
 
-print("\nLargest Connected Component (10% of LCC) - Nodes:", G_lcc.number_of_nodes(), "Edges:", G_lcc.number_of_edges())
+print("\nLargest Connected Component (5% of LCC) - Nodes:", G_lcc.number_of_nodes(), "Edges:", G_lcc.number_of_edges())
 print("Average Degree (Before):", avgDegree)
 print("Average Path Length (Before):", avg_path_length_before)
 print("Clustering Coefficient (Before):", clustering_coeff_before)
