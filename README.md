@@ -4,7 +4,7 @@
 ### Amazon
 Run Watts_Strogatz_Amazon.py with com-amazon.ungraph.txt dataset for Watts model for 5% extraction calculation from the Amazon dataset
   - Watts_Strogatz_Amazon.py
-  - com-amazon.ungraph.tx
+  - com-amazon.ungraph.txt
 ### Twitch
 With the extracted 10% connected largest component from the original dataset provided in sample.txt, run Watts_Twitch_Model.py to see the results. 
 To regenerate sample.txt, run Watts_Twitch_Sample.py
