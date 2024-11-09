@@ -53,7 +53,7 @@ avgDegree = sum(dict(G_lcc.degree()).values()) / G_lcc.number_of_nodes()
 avgDegree_rounded = round(sum(dict(G_lcc.degree()).values()) / G_lcc.number_of_nodes())  # Rounded to the nearest whole number
 clustering_coeff_before = nx.average_clustering(G_lcc)
 
-print("\nLargest Connected Component (20% of LCC) - Nodes:", G_lcc.number_of_nodes(), "Edges:", G_lcc.number_of_edges())
+print("\nLargest Connected Component (5% of LCC) - Nodes:", G_lcc.number_of_nodes(), "Edges:", G_lcc.number_of_edges())
 print("Average Degree (Before):", avgDegree)
 print("Average Path Length (Before):", avg_path_length_before)
 print("Clustering Coefficient (Before):", clustering_coeff_before)
