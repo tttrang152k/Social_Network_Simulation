@@ -2,20 +2,22 @@ import random
 import networkx as nx
 import pandas as pd
 
-# Add a node with preferential attachment
+# Add a node with connections based on node degrees
 def add_node_with_edges(G, node_id, expectedConnections):
     targets = set()
     totalDegree = sum(G.degree(node) for node in G.nodes)
     
+    # Add connections until we reach the desired number
     while len(targets) < expectedConnections:
         probabilities = [G.degree(node) / totalDegree for node in G.nodes]
         chosen = random.choices(list(G.nodes), weights=probabilities, k=1)[0]
         targets.add(chosen)
 
+    # Connect the new node to selected nodes
     for target in targets:
         G.add_edge(node_id, target)
 
-# Add multiple nodes with preferential attachment
+# Add multiple nodes using preferential attachment
 def barabasiAlbertSimple(G, expectedConnections, numNewNodes):
     currentNodeID = max(G.nodes()) + 1
     for i in range(numNewNodes):
