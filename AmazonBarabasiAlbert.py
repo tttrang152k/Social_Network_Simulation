@@ -58,7 +58,7 @@ print("Clustering Coefficient (Before):", clustering_coeff_before)
 
 # Use initial average degree as expected connections for new nodes
 expected_connections = int(avgDegree_rounded)
-new_nodes = 1000 
+new_nodes = 5000 
 
 # Add new nodes with preferential attachment
 G_lcc = barabasiAlbertSimple(G_lcc, expected_connections, new_nodes)
