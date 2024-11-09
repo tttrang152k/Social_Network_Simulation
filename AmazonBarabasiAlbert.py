@@ -57,11 +57,11 @@ print("Average Path Length (Before):", avg_path_length_before)
 print("Clustering Coefficient (Before):", clustering_coeff_before)
 
 # Use initial average degree as expected connections for new nodes
-expectedConnections = int(avgDegree_rounded)
-expectedConnections = 5000
+expected_connections = int(avgDegree_rounded)
+new_nodes = 1000 
 
 # Add new nodes with preferential attachment
-G_lcc = barabasiAlbertSimple(G_lcc, expectedConnections, expectedConnections)
+G_lcc = barabasiAlbertSimple(G_lcc, expected_connections, new_nodes)
 
 # Calculate updated metrics
 avg_path_length_after = nx.average_shortest_path_length(G_lcc) if nx.is_connected(G_lcc) else float('inf')
