@@ -17,7 +17,7 @@ sample_graph = nx.read_edgelist(file_path, nodetype=int)
 
 
 
-print(f"Graph size: {sample_graph.number_of_nodes()}")
+print(f"\n Watts_Twitch_ Gamer Graph\n size: {sample_graph.number_of_nodes()}")
 
 #Display the original graph attributes
 
