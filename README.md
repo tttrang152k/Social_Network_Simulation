@@ -13,5 +13,8 @@ To regenerate sample.txt, run Watts_Twitch_Sample.py
   - sample.txt
 ## Barabasi-Albert Model
 ### Amazon
-
+Run com-amazon.ungraph.txt to extract 20% for Barabasi-Albert model to calculate the Amazon dataset
+-com-amazon.ungraph.txt
 ### Twitch
+With the extracted 5% connected largest component from the original dataset provided in large_twitch_edges.csv
+-large_twitch_edges.csv
