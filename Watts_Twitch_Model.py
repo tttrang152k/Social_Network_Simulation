@@ -34,7 +34,7 @@ print(f"Average Clustering Coefficient (Before): {average_clustering_coefficient
 # Define n, k, p for building the model
 n = sample_graph.number_of_nodes()  
 k = int(sum(dict(sample_graph.degree()).values()) / n) 
-print(f"\naverage degree is: {k}")
+
 k = k * 2
 if k < 4:
     k = 4
