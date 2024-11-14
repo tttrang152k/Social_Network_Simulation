@@ -19,21 +19,23 @@ import matplotlib.pyplot as plt
 # plt.show()
 
 
+
+
 G = nx.Graph() 
-G = nx.read_edgelist("com-amazon.ungraph.txt", create_using=nx. DiGraph(), nodetype=int)
-G_ud = G.to_undirected()
-N_ori, K_ori = G_ud.order(), G_ud.size() 
+G = nx.read_edgelist("com-amazon.ungraph.txt", nodetype=int)
+N_ori = G.number_of_nodes()
+K_ori = G.number_of_edges() 
 print("Original Graph - Nodes: ", N_ori, " Edges: ", K_ori)
 
 
 #Extract largest component 
-connected_components = list(nx.connected_components(G_ud))
+connected_components = list(nx.connected_components(G))
 largest_comp = max(connected_components, key=len)
-G_largest_comp= G_ud.subgraph(largest_comp)
+G_largest_comp= G.subgraph(largest_comp)
 
 #Extract 10% from largest component 
 sorted_nodes = sorted(G_largest_comp.degree, key=lambda x: x[1], reverse=True)
-top_10_percent_count = int(len(sorted_nodes) * 0.025)
+top_10_percent_count = int(len(sorted_nodes) * 0.015)
 top_10_percent_nodes = [node for node, degree in sorted_nodes[:top_10_percent_count]]
 G_10_subgraph_largest_comp = G_largest_comp.subgraph(top_10_percent_nodes)
 G_10_subgraph_largest_comp_ud = G_10_subgraph_largest_comp.to_undirected()
@@ -45,15 +47,20 @@ G_largest_comp_10 = G_10_subgraph_largest_comp_ud.subgraph(largest_comp_10)
 
 
 ##Calculation for the original network of the 10% most connected nodes from the largest component
-N, K = G_largest_comp_10.order(), G_largest_comp_10.size() 
-avg_deg = 2*float(K) / N
-avg_path_lenghts = []
+N = G_largest_comp_10.number_of_nodes()
+K = G_largest_comp_10.number_of_edges()
+
+
 
 
 #Cluster Coefficient of all nodes 
 clust_coefficients = nx.clustering(G_largest_comp_10)
-avg_clust = sum(clust_coefficients.values()) / len(clust_coefficients)
+# avg_clust = sum(clust_coefficients.values()) / len(clust_coefficients)
+avg_clust = nx.average_clustering(G_largest_comp_10)
 avg_path_length = nx.average_shortest_path_length(G_largest_comp_10) if nx.is_connected(G_largest_comp_10) else float('inf')
+
+##Calculate avg degree for Latice 
+avg_deg = (6-4*avg_clust)/(3-4*avg_clust)
 
 
 print("\n\n10 percent of Largest Component- Nodes: ", N, " Edges: ", K)
@@ -63,22 +70,28 @@ print("Average Clustering Coefficient: ", avg_clust)
 
 
 #Watts-Strogatz model
-beta = 0.05
 
-#regular ring lattice 
-G_Watts = nx.Graph()
-# Add nodes to the graph
-G_Watts.add_nodes_from(range(N))
+# #regular ring lattice 
+# G_Watts = nx.Graph()
+# # Add nodes to the graph
+# G_Watts.add_nodes_from(range(N))
 
-k = int(avg_deg) // 2 
+# k = round(avg_deg) // 2 
 
-# Connect each node to half_k neighbors on each side
-for node in range(N):
-    for j in range(1, k + 1):
-        neighbor1 = (node + j) % N
-        neighbor2 = (node - j) % N
-        G_Watts.add_edge(node, neighbor1)
-        G_Watts.add_edge(node, neighbor2)
+# # Connect each node to half_k neighbors on each side
+# for node in range(N):
+#     for j in range(1, k + 1):
+#         neighbor1 = (node + j) % N
+#         neighbor2 = (node - j) % N
+#         G_Watts.add_edge(node, neighbor1)
+#         G_Watts.add_edge(node, neighbor2)
+
+#Regular latice network with beta = 0
+G_Watts = nx.watts_strogatz_graph(N, round(avg_deg), 0)
+G_0_clust = nx.average_clustering(G_Watts)
+beta = (1 - (avg_clust/G_0_clust)) ** (1/3)
+
+#Calculate beta
 
 
 edges = list(G_Watts.edges())
@@ -109,17 +122,20 @@ for i in G_Watts.nodes():
 #Calculation for Watts Network
 N_Watts, K_Watts = G_Watts.order(), G_Watts.number_of_edges() 
 avg_deg_Watts = sum(dict(G_Watts.degree()).values()) / G_Watts.number_of_nodes()
-avg_path_lenghts_Watts = []
+# avg_path_lenghts_Watts = []
 
 
 G_ud_Watts = G_Watts.to_undirected()
 avg_clust_Watts = nx.average_clustering(G_Watts)
-for C in (G_ud_Watts.subgraph(c).copy() for c in nx.connected_components(G_ud_Watts)):
-    avg_path_lenghts_Watts.append(nx.average_shortest_path_length(C))
+# for C in (G_ud_Watts.subgraph(c).copy() for c in nx.connected_components(G_ud_Watts)):
+#     avg_path_lenghts_Watts.append(nx.average_shortest_path_length(C))
+avg_path_lengths_Watts = nx.average_shortest_path_length(G_Watts) if nx.is_connected(G_Watts) else float('inf')
 
-print("\n\nWatts-Strogatz Network - Nodes: ", N_Watts, " Edges: ", K_Watts)
+
+print("\n\nWatts-Strogatz Network - Nodes: ", N_Watts, " Edges: ", K_Watts, " Beta: ", beta)
 print("Average degree: ", avg_deg_Watts)
-print("Average path length: ", sum(avg_path_lenghts_Watts)/nx.number_connected_components(G_ud_Watts))
+# print("Average path length: ", sum(avg_path_lenghts_Watts)/nx.number_connected_components(G_ud_Watts))
+print("Average path length: ", avg_path_lengths_Watts)
 print("AVG Clustering Coefficient: ", avg_clust_Watts)
 
 
